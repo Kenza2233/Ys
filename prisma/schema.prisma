@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  name      String?
+  image     String?
+  accounts  Account[]
+  playlists Playlist[]
+  importJobs ImportJob[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Account {
+  id           String    @id @default(cuid())
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  provider     String
+  providerAccountId String
+  accessToken  String    // encrypted
+  refreshToken String?   // encrypted
+  expiresAt    DateTime?
+  tokenType    String?
+  scope        String?
+  youtubeChannelId String?
+  youtubeChannelTitle String?
+  youtubeThumbnail String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@unique([provider, providerAccountId])
+}
+
+model Playlist {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  thumbnail   String?
+  isPublic    Boolean   @default(false)
+  tags        String[]  // array of tag strings
+  videos      Video[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Video {
+  id             String   @id @default(cuid())
+  playlistId     String
+  playlist       Playlist @relation(fields: [playlistId], references: [id], onDelete: Cascade)
+  youtubeVideoId String   @unique
+  title          String
+  description    String?
+  thumbnail      String?
+  duration       String?  // ISO 8601 format
+  durationSeconds Int?
+  channelTitle   String?
+  channelId      String?
+  viewCount      Int?
+  position       Int
+  customTitle    String?
+  customTags     String[]
+  customCategory String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([playlistId, position])
+}
+
+model ImportJob {
+  id          String        @id @default(cuid())
+  userId      String
+  user        User          @relation(fields: [userId], references: [id])
+  playlistId  String?
+  method      String        // "manual_paste" | "xlsx_upload" | "search_select" | "playlist_import"
+  status      String        // "pending" | "processing" | "completed" | "failed" | "partial"
+  totalItems  Int           @default(0)
+  successCount Int          @default(0)
+  failCount   Int           @default(0)
+  errors      ImportError[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model ImportError {
+  id          String     @id @default(cuid())
+  importJobId String
+  importJob   ImportJob  @relation(fields: [importJobId], references: [id], onDelete: Cascade)
+  url         String?
+  row         Int?
+  errorMessage String
+  createdAt   DateTime   @default(now())
+}
