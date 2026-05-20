@@ -23,7 +23,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     return NextResponse.json({ error: "Playlist not found" }, { status: 404 });
   }
 
-  if (playlist.userId !== (session.user as any).id) {
+  if (playlist.userId !== session.user.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -44,7 +44,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
     where: { id },
   });
 
-  if (!playlist || playlist.userId !== (session.user as any).id) {
+  if (!playlist || playlist.userId !== session.user.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -72,7 +72,7 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
     where: { id },
   });
 
-  if (!playlist || playlist.userId !== (session.user as any).id) {
+  if (!playlist || playlist.userId !== session.user.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

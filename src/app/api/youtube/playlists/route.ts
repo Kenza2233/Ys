@@ -10,7 +10,7 @@ export async function GET(req: Request) {
   }
 
   try {
-    const youtube = await getYouTubeClient((session.user as any).id);
+    const youtube = await getYouTubeClient(session.user.id);
     const response = await youtube.playlists.list({
       part: ["snippet", "contentDetails"],
       mine: true,

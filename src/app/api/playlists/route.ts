@@ -9,7 +9,7 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const userId = (session.user as any).id;
+  const userId = session.user.id;
   const playlists = await prisma.playlist.findMany({
     where: { userId },
     include: {
@@ -29,7 +29,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const userId = (session.user as any).id;
+  const userId = session.user.id;
   const body = await req.json();
   const { title, description } = body;
 

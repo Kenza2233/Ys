@@ -12,9 +12,9 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
   }
 
   const { id: playlistId } = await params;
-  const userId = (session.user as any).id;
+  const userId = session.user.id;
   const body = await req.json();
-  const { youtubePlaylistId, importMode, selectedVideoIds, rangeStart, rangeEnd } = body;
+  const { youtubePlaylistId, importMode, rangeStart, rangeEnd } = body;
 
   if (!youtubePlaylistId) {
     return NextResponse.json({ error: "YouTube Playlist ID is required" }, { status: 400 });
@@ -50,9 +50,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
 
     let targetVideoIds = allVideoIds;
 
-    if (importMode === "partial" && selectedVideoIds) {
-      targetVideoIds = allVideoIds.filter(id => selectedVideoIds.includes(id));
-    } else if (importMode === "range") {
+    if (importMode === "range") {
       const start = (rangeStart || 1) - 1;
       const end = rangeEnd || allVideoIds.length;
       targetVideoIds = allVideoIds.slice(start, end);

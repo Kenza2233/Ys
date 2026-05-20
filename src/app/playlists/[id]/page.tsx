@@ -4,7 +4,7 @@ import { useEffect, useState, use } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "sonner";
-import { Play, Download, Trash2, GripVertical } from "lucide-react";
+import { Play, Download, Trash2 } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Link from "next/link";
 
@@ -60,7 +60,7 @@ export default function PlaylistDetail({ params }: { params: Promise<{ id: strin
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
       <div className="lg:col-span-2 space-y-6">
-        <div className="aspect-video bg-black rounded-xl overflow-hidden ring-1 ring-white/10">
+        <div className="aspect-video bg-black rounded-xl overflow-hidden ring-1 ring-border">
           {activeVideoId ? (
             <iframe
               width="100%"
@@ -92,7 +92,6 @@ export default function PlaylistDetail({ params }: { params: Promise<{ id: strin
           <Table>
             <TableHeader>
               <TableRow className="border-border">
-                <TableHead className="w-12"></TableHead>
                 <TableHead>Video</TableHead>
                 <TableHead>Duration</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
@@ -105,9 +104,6 @@ export default function PlaylistDetail({ params }: { params: Promise<{ id: strin
                   className={`border-border cursor-pointer hover:bg-accent transition-colors ${activeVideoId === v.youtubeVideoId ? 'bg-accent' : ''}`}
                   onClick={() => setActiveVideoId(v.youtubeVideoId)}
                 >
-                  <TableCell className="text-muted-foreground">
-                    <GripVertical className="h-4 w-4" />
-                  </TableCell>
                   <TableCell>
                     <div className="flex gap-3">
                       <img src={v.thumbnail} alt="" className="w-24 aspect-video object-cover rounded" />
@@ -119,7 +115,7 @@ export default function PlaylistDetail({ params }: { params: Promise<{ id: strin
                   </TableCell>
                   <TableCell className="text-xs text-muted-foreground">{v.duration}</TableCell>
                   <TableCell className="text-right">
-                    <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive hover:bg-destructive/10" onClick={(e) => { e.stopPropagation(); deleteVideo(v.id); }}>
+                    <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive hover:bg-destructive/10" onClick={(e: React.MouseEvent) => { e.stopPropagation(); deleteVideo(v.id); }}>
                       <Trash2 className="h-4 w-4" />
                     </Button>
                   </TableCell>

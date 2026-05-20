@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus, ListVideo, Clock, PlayCircle, Search, FileUp, ClipboardList } from "lucide-react";
+import { Plus, ListVideo, Clock, PlayCircle, Search, FileUp, ClipboardList, Trash2 } from "lucide-react";
 import { YoutubeIcon as Youtube } from "@/components/icons/YoutubeIcon";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -58,6 +58,27 @@ export default function Dashboard() {
     }
   };
 
+  const deletePlaylist = async (plId: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (confirm("Adakah anda pasti ingin memadam playlist ini? Semua video di dalamnya akan dipadamkan.")) {
+        try {
+            const response = await fetch(`/api/playlists/${plId}`, {
+                method: "DELETE",
+            });
+            if (response.ok) {
+                toast.success("Playlist berjaya dipadam");
+                fetchPlaylists();
+            } else {
+                toast.error("Gagal memadam playlist");
+            }
+        } catch (error) {
+            toast.error("Ralat berlaku semasa memadam playlist");
+        }
+    }
+  };
+
   const totalVideos = playlists.reduce((acc, pl) => acc + (pl._count?.videos || 0), 0);
 
   return (
@@ -65,7 +86,7 @@ export default function Dashboard() {
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold font-heading">Dashboard</h1>
         <Dialog>
-          <DialogTrigger >
+          <DialogTrigger>
             <Button><Plus className="h-4 w-4 mr-2" /> New Playlist</Button>
           </DialogTrigger>
           <DialogContent>
@@ -158,7 +179,13 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {playlists.map((pl) => (
             <Link key={pl.id} href={`/playlists/${pl.id}`}>
-              <Card className="bg-card border-none hover:ring-1 hover:ring-primary/50 transition-all cursor-pointer group">
+              <Card className="bg-card border-none hover:ring-1 hover:ring-primary/50 transition-all cursor-pointer group relative">
+                <button
+                  className="absolute top-3 right-3 z-10 p-1.5 rounded-md bg-destructive/10 text-destructive opacity-0 group-hover:opacity-100 transition-opacity hover:bg-destructive/20"
+                  onClick={(e) => deletePlaylist(pl.id, e)}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </button>
                 <div className="aspect-video bg-muted relative rounded-t-lg overflow-hidden">
                   {pl.thumbnail ? (
                     <img src={pl.thumbnail} alt="" className="object-cover w-full h-full" />

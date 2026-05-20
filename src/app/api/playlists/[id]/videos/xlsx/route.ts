@@ -13,7 +13,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
   }
 
   const { id: playlistId } = await params;
-  const userId = (session.user as any).id;
+  const userId = session.user.id;
   const formData = await req.formData();
   const file = formData.get("file") as File;
   const mappingStr = formData.get("mapping") as string;

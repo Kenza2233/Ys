@@ -13,7 +13,7 @@ export async function DELETE(
   }
 
   const { id: playlistId, videoId } = await params;
-  const userId = (session.user as any).id;
+  const userId = session.user.id;
 
   const playlist = await prisma.playlist.findUnique({
     where: { id: playlistId },
@@ -31,22 +31,26 @@ export async function DELETE(
     return NextResponse.json({ error: "Video not found" }, { status: 404 });
   }
 
+  const deletedPosition = video.position;
+
   await prisma.video.delete({
     where: { id: videoId },
   });
 
-  // Reorder remaining videos
-  const remainingVideos = await prisma.video.findMany({
-    where: { playlistId },
-    orderBy: { position: "asc" },
+  // Reorder remaining videos to avoid gaps
+  await prisma.video.updateMany({
+    where: {
+      playlistId,
+      position: {
+        gt: deletedPosition,
+      },
+    },
+    data: {
+      position: {
+        decrement: 1,
+      },
+    },
   });
-
-  for (let i = 0; i < remainingVideos.length; i++) {
-    await prisma.video.update({
-      where: { id: remainingVideos[i].id },
-      data: { position: i },
-    });
-  }
 
   return NextResponse.json({ success: true });
 }

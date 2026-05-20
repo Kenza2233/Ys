@@ -20,7 +20,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     },
   });
 
-  if (!playlist || playlist.userId !== (session.user as any).id) {
+  if (!playlist || playlist.userId !== session.user.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

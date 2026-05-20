@@ -10,7 +10,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
   }
 
   const { id } = await params;
-  const userId = (session.user as any).id;
+  const userId = session.user.id;
 
   // Verify job belongs to this user
   const job = await prisma.importJob.findFirst({
