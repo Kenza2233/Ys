@@ -131,8 +131,8 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, token }) {
       if (session.user) {
-        (session.user as any).id = token.sub;
-        (session.user as any).error = token.error;
+        session.user.id = token.sub as string;
+        session.user.error = token.error as string | undefined;
       }
       return session;
     },

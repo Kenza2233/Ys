@@ -16,8 +16,38 @@ const Tabs = ({ children, defaultValue, className, ...props }: any) => {
 }
 
 const TabsList = ({ children, className, value, setValue, ...props }: any) => {
+  const triggers = React.Children.toArray(children).filter(
+    (child) => React.isValidElement(child)
+  ) as React.ReactElement<any>[];
+
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const currentIndex = triggers.findIndex((t) => t.props.value === value);
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        const nextIndex = (currentIndex - 1 + triggers.length) % triggers.length;
+        setValue(triggers[nextIndex].props.value);
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        const nextIndex = (currentIndex + 1) % triggers.length;
+        setValue(triggers[nextIndex].props.value);
+      }
+    };
+
+    const el = document.querySelector('[data-tabs-list]');
+    if (el) {
+        el.addEventListener('keydown', handleKeyDown as any);
+    }
+    return () => el?.removeEventListener('keydown', handleKeyDown as any);
+  }, [value, setValue, triggers]);
+
   return (
-    <div className={cn("inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground", className)} {...props}>
+    <div
+      data-tabs-list
+      tabIndex={0}
+      className={cn("inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring", className)}
+      {...props}
+    >
       {React.Children.map(children, (child) => {
         if (React.isValidElement(child)) {
           return React.cloneElement(child as React.ReactElement<any>, { activeValue: value, setValue })
@@ -33,6 +63,7 @@ const TabsTrigger = ({ children, value, activeValue, setValue, className, ...pro
   return (
     <button
       onClick={() => setValue(value)}
+      tabIndex={-1}
       className={cn(
         "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
         isActive ? "bg-background text-foreground shadow-sm" : "hover:bg-background/50",
