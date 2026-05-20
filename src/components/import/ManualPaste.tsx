@@ -3,7 +3,6 @@
 import { useState, useMemo } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 import { extractVideoId } from "@/lib/youtube";
 import { Badge } from "@/components/ui/badge";
@@ -16,7 +15,6 @@ interface ManualPasteProps {
 export function ManualPaste({ playlistId, onComplete }: ManualPasteProps) {
   const [urlsText, setUrlsText] = useState("");
   const [isImporting, setIsImporting] = useState(false);
-  const [progress, setProgress] = useState(0);
 
   const urls = useMemo(() => {
     return urlsText.split("\n").map(line => line.trim()).filter(line => line.length > 0);
@@ -38,7 +36,6 @@ export function ManualPaste({ playlistId, onComplete }: ManualPasteProps) {
     }
 
     setIsImporting(true);
-    setProgress(10);
 
     try {
       const response = await fetch(`/api/playlists/${playlistId}/videos/manual`, {
@@ -50,17 +47,16 @@ export function ManualPaste({ playlistId, onComplete }: ManualPasteProps) {
       const data = await response.json();
 
       if (data.success) {
-        toast.success(`Successfully imported ${data.successCount} videos`);
+        toast.success(`Import started! ${validCount} videos queued for processing.`);
         setUrlsText("");
         if (onComplete) onComplete();
       } else {
-        toast.error(data.error || "Failed to import videos");
+        toast.error(data.error || "Failed to start import");
       }
     } catch (error) {
       toast.error("An error occurred during import");
     } finally {
       setIsImporting(false);
-      setProgress(0);
     }
   };
 
@@ -88,13 +84,6 @@ export function ManualPaste({ playlistId, onComplete }: ManualPasteProps) {
           {isImporting ? "Importing..." : "Add to Playlist"}
         </Button>
       </div>
-
-      {isImporting && (
-        <div className="space-y-2">
-          <Progress value={progress} />
-          <p className="text-xs text-center text-muted-foreground">Processing videos...</p>
-        </div>
-      )}
 
       {urls.length > 0 && (
         <div className="max-h-[200px] overflow-auto text-xs space-y-1 p-2 bg-muted rounded">

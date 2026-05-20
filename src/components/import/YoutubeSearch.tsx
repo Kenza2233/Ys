@@ -7,7 +7,6 @@ import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import { Search, Play, Plus, Check } from "lucide-react";
-import Image from "next/image";
 
 interface YoutubeSearchProps {
   playlistId: string;

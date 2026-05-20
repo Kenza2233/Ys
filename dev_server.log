@@ -203,3 +203,190 @@ prisma:warn In production, we recommend using `prisma generate --no-engine` (See
 prisma:warn In production, we recommend using `prisma generate --no-engine` (See: `prisma generate --help`)
  GET /api/youtube/playlists 401 in 24ms (next.js: 14ms, application-code: 10ms)
  GET /api/youtube/playlists 401 in 10ms (next.js: 4ms, application-code: 6ms)
+✓ Compiled in 1056ms
+ GET / 200 in 1619ms (next.js: 598ms, application-code: 1021ms)
+[next-auth][warn][NEXTAUTH_URL]
+https://next-auth.js.org/warnings#nextauth_url
+[next-auth][warn][NO_SECRET]
+https://next-auth.js.org/warnings#no_secret
+ GET /api/auth/session 200 in 684ms (next.js: 644ms, application-code: 40ms)
+prisma:warn In production, we recommend using `prisma generate --no-engine` (See: `prisma generate --help`)
+ GET /dashboard 200 in 222ms (next.js: 36ms, application-code: 186ms)
+[browser] In HTML, <button> cannot be a descendant of <button>.
+This will cause a hydration error.
+
+  ...
+    <InnerLayoutRouter url="/dashboard" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>
+      <SegmentViewNode type="page" pagePath="src/dashbo...">
+        <SegmentTrieNode>
+        <ClientPageRoot Component={function Dashboard} serverProvidedParams={{...}}>
+          <Dashboard params={Promise} searchParams={Promise}>
+            <div className="space-y-8">
+              <div className="flex items...">
+                <h1>
+                <Dialog>
+                  <DialogRoot data-slot="dialog">
+                    <DialogTrigger>
+                      <DialogTrigger data-slot="dialog-tri...">
+>                       <button
+>                         type="button"
+>                         onClick={function}
+>                         onMouseDown={function}
+>                         onKeyDown={function}
+>                         onKeyUp={function}
+>                         onPointerDown={function}
+>                         tabIndex={0}
+>                         disabled={false}
+>                         data-base-ui-click-trigger=""
+>                         id="base-ui-_R_r35esnelb_"
+>                         aria-haspopup="dialog"
+>                         aria-expanded={false}
+>                         aria-controls={undefined}
+>                         data-slot="dialog-trigger"
+>                         ref={function}
+>                       >
+                          <Button>
+                            <Button data-slot="button" className={"group/bu..."}>
+>                             <button
+>                               type="button"
+>                               onClick={function}
+>                               onMouseDown={function}
+>                               onKeyDown={function}
+>                               onKeyUp={function}
+>                               onPointerDown={function}
+>                               tabIndex={0}
+>                               disabled={false}
+>                               data-slot="button"
+>                               ref={function}
+>                               className={"group/button inline-flex shrink-0 items-center justify-center rounded-lg ..."}
+>                             >
+                    ...
+              ...
+      ...
+
+[browser] <button> cannot contain a nested <button>.
+See this log for the ancestor stack trace.
+[browser] Uncaught Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at button (<anonymous>)
+    at Button (src/components/ui/button.tsx:50:5)
+    at Dashboard (src/app/dashboard/page.tsx:69:13)
+  48 | }: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
+  49 |   return (
+> 50 |     <ButtonPrimitive
+     |     ^
+  51 |       data-slot="button"
+  52 |       className={cn(buttonVariants({ variant, size, className }))}
+  53 |       {...props}
+ GET /api/playlists 401 in 127ms (next.js: 87ms, application-code: 40ms)
+ GET /api/auth/session 200 in 91ms (next.js: 71ms, application-code: 20ms)
+ GET /api/playlists 401 in 95ms (next.js: 79ms, application-code: 16ms)
+ GET /api/auth/session 200 in 19ms (next.js: 3ms, application-code: 16ms)
+prisma:warn In production, we recommend using `prisma generate --no-engine` (See: `prisma generate --help`)
+ GET /import 200 in 188ms (next.js: 39ms, application-code: 149ms)
+ GET /api/auth/session 200 in 74ms (next.js: 63ms, application-code: 11ms)
+ GET /api/playlists 401 in 14ms (next.js: 3ms, application-code: 11ms)
+prisma:warn In production, we recommend using `prisma generate --no-engine` (See: `prisma generate --help`)
+ GET /api/youtube/playlists 401 in 5.6s (next.js: 5.6s, application-code: 55ms)
+ GET /api/youtube/playlists 401 in 31ms (next.js: 9ms, application-code: 22ms)
+ GET / 200 in 83ms (next.js: 6ms, application-code: 76ms)
+ GET /api/auth/session 200 in 87ms (next.js: 74ms, application-code: 13ms)
+prisma:warn In production, we recommend using `prisma generate --no-engine` (See: `prisma generate --help`)
+ GET /dashboard 200 in 75ms (next.js: 4ms, application-code: 71ms)
+[browser] In HTML, <button> cannot be a descendant of <button>.
+This will cause a hydration error.
+
+  ...
+    <InnerLayoutRouter url="/dashboard" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>
+      <SegmentViewNode type="page" pagePath="src/dashbo...">
+        <SegmentTrieNode>
+        <ClientPageRoot Component={function Dashboard} serverProvidedParams={{...}}>
+          <Dashboard params={Promise} searchParams={Promise}>
+            <div className="space-y-8">
+              <div className="flex items...">
+                <h1>
+                <Dialog>
+                  <DialogRoot data-slot="dialog">
+                    <DialogTrigger>
+                      <DialogTrigger data-slot="dialog-tri...">
+>                       <button
+>                         type="button"
+>                         onClick={function}
+>                         onMouseDown={function}
+>                         onKeyDown={function}
+>                         onKeyUp={function}
+>                         onPointerDown={function}
+>                         tabIndex={0}
+>                         disabled={false}
+>                         data-base-ui-click-trigger=""
+>                         id="base-ui-_R_r35esnelb_"
+>                         aria-haspopup="dialog"
+>                         aria-expanded={false}
+>                         aria-controls={undefined}
+>                         data-slot="dialog-trigger"
+>                         ref={function}
+>                       >
+                          <Button>
+                            <Button data-slot="button" className={"group/bu..."}>
+>                             <button
+>                               type="button"
+>                               onClick={function}
+>                               onMouseDown={function}
+>                               onKeyDown={function}
+>                               onKeyUp={function}
+>                               onPointerDown={function}
+>                               tabIndex={0}
+>                               disabled={false}
+>                               data-slot="button"
+>                               ref={function}
+>                               className={"group/button inline-flex shrink-0 items-center justify-center rounded-lg ..."}
+>                             >
+                    ...
+              ...
+      ...
+
+[browser] <button> cannot contain a nested <button>.
+See this log for the ancestor stack trace.
+[browser] Uncaught Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at button (<anonymous>)
+    at Button (src/components/ui/button.tsx:50:5)
+    at Dashboard (src/app/dashboard/page.tsx:69:13)
+  48 | }: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
+  49 |   return (
+> 50 |     <ButtonPrimitive
+     |     ^
+  51 |       data-slot="button"
+  52 |       className={cn(buttonVariants({ variant, size, className }))}
+  53 |       {...props}
+ GET /api/playlists 401 in 81ms (next.js: 6ms, application-code: 75ms)
+ GET /api/auth/session 200 in 89ms (next.js: 63ms, application-code: 27ms)
+ GET /api/playlists 401 in 28ms (next.js: 9ms, application-code: 18ms)
+ GET /api/auth/session 200 in 16ms (next.js: 6ms, application-code: 10ms)
+prisma:warn In production, we recommend using `prisma generate --no-engine` (See: `prisma generate --help`)
+ GET /import 200 in 101ms (next.js: 3ms, application-code: 98ms)
+ GET /api/auth/session 200 in 72ms (next.js: 64ms, application-code: 8ms)
+ GET /api/playlists 401 in 15ms (next.js: 3ms, application-code: 12ms)
+prisma:warn In production, we recommend using `prisma generate --no-engine` (See: `prisma generate --help`)
+ GET /api/youtube/playlists 401 in 15ms (next.js: 4ms, application-code: 11ms)
+ GET /api/youtube/playlists 401 in 11ms (next.js: 3ms, application-code: 8ms)

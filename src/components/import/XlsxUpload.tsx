@@ -2,16 +2,13 @@
 
 import { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-import * as XLSX from "xlsx";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card } from "@/components/ui/card";
 import { Upload, FileSpreadsheet, Download } from "lucide-react";
 
-// For Select component, we need to add it via shadcn if not present
-// I'll use standard select for now to avoid dependency issues if shadcn add select fails
+// XLSX is loaded dynamically to reduce initial bundle size
 
 interface XlsxUploadProps {
   playlistId: string;
@@ -37,7 +34,8 @@ export function XlsxUpload({ playlistId, onComplete }: XlsxUploadProps) {
     setFile(selectedFile);
 
     const reader = new FileReader();
-    reader.onload = (e) => {
+    reader.onload = async (e) => {
+      const XLSX = await import("xlsx");
       const data = e.target?.result;
       const workbook = XLSX.read(data, { type: "array" });
       const sheetName = workbook.SheetNames[0];
@@ -89,12 +87,12 @@ export function XlsxUpload({ playlistId, onComplete }: XlsxUploadProps) {
 
       const data = await response.json();
       if (data.success) {
-        toast.success(`Successfully imported ${data.successCount} videos`);
+        toast.success(`Import started! Check dashboard for progress.`);
         setFile(null);
         setPreviewData([]);
         if (onComplete) onComplete();
       } else {
-        toast.error(data.error || "Failed to import");
+        toast.error(data.error || "Failed to start import");
       }
     } catch (error) {
       toast.error("An error occurred");
@@ -103,7 +101,8 @@ export function XlsxUpload({ playlistId, onComplete }: XlsxUploadProps) {
     }
   };
 
-  const downloadTemplate = () => {
+  const downloadTemplate = async () => {
+    const XLSX = await import("xlsx");
     const ws = XLSX.utils.json_to_sheet([
       { url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", title: "Never Gonna Give You Up", description: "Classic", tags: "music,pop", order: 1, category: "Music" }
     ]);

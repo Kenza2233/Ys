@@ -33,7 +33,7 @@ function ImportContent() {
         <p className="text-muted-foreground">Select a method and a destination playlist to start adding videos.</p>
       </div>
 
-      <div className="space-y-4 bg-[#1e1e1e] p-6 rounded-xl border-none">
+      <div className="space-y-4 bg-card p-6 rounded-xl border-none">
         <div className="max-w-md space-y-2">
             <Label>Select Destination Playlist</Label>
             <select
@@ -48,7 +48,7 @@ function ImportContent() {
         </div>
 
         <Tabs defaultValue={defaultMethod} className="w-full">
-            <TabsList className="grid w-full grid-cols-4 bg-[#0f0f0f]">
+            <TabsList className="grid w-full grid-cols-4 bg-muted">
             <TabsTrigger value="manual">Manual Paste</TabsTrigger>
             <TabsTrigger value="xlsx">XLSX Upload</TabsTrigger>
             <TabsTrigger value="search">Search</TabsTrigger>

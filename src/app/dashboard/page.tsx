@@ -89,7 +89,7 @@ export default function Dashboard() {
 
       {/* Stats Overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="bg-[#1e1e1e] border-none">
+        <Card className="bg-card border-none">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Total Playlists</CardTitle>
             <ListVideo className="h-4 w-4 text-primary" />
@@ -98,7 +98,7 @@ export default function Dashboard() {
             <div className="text-2xl font-bold">{playlists.length}</div>
           </CardContent>
         </Card>
-        <Card className="bg-[#1e1e1e] border-none">
+        <Card className="bg-card border-none">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Total Videos</CardTitle>
             <PlayCircle className="h-4 w-4 text-primary" />
@@ -107,7 +107,7 @@ export default function Dashboard() {
             <div className="text-2xl font-bold">{totalVideos}</div>
           </CardContent>
         </Card>
-        <Card className="bg-[#1e1e1e] border-none">
+        <Card className="bg-card border-none">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Recent Activity</CardTitle>
             <Clock className="h-4 w-4 text-primary" />
@@ -120,7 +120,7 @@ export default function Dashboard() {
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Link href="/import?method=manual" className="block">
-            <Card className="hover:bg-[#2a2a2a] transition-colors cursor-pointer border-dashed border-muted-foreground/50">
+            <Card className="hover:bg-accent transition-colors cursor-pointer border-dashed border-muted-foreground/50">
                 <CardContent className="pt-6 flex flex-col items-center gap-2">
                     <ClipboardList className="h-8 w-8 text-muted-foreground" />
                     <span className="text-sm font-medium">Manual Paste</span>
@@ -128,7 +128,7 @@ export default function Dashboard() {
             </Card>
           </Link>
           <Link href="/import?method=xlsx" className="block">
-            <Card className="hover:bg-[#2a2a2a] transition-colors cursor-pointer border-dashed border-muted-foreground/50">
+            <Card className="hover:bg-accent transition-colors cursor-pointer border-dashed border-muted-foreground/50">
                 <CardContent className="pt-6 flex flex-col items-center gap-2">
                     <FileUp className="h-8 w-8 text-muted-foreground" />
                     <span className="text-sm font-medium">Upload XLSX</span>
@@ -136,7 +136,7 @@ export default function Dashboard() {
             </Card>
           </Link>
           <Link href="/import?method=search" className="block">
-            <Card className="hover:bg-[#2a2a2a] transition-colors cursor-pointer border-dashed border-muted-foreground/50">
+            <Card className="hover:bg-accent transition-colors cursor-pointer border-dashed border-muted-foreground/50">
                 <CardContent className="pt-6 flex flex-col items-center gap-2">
                     <Search className="h-8 w-8 text-muted-foreground" />
                     <span className="text-sm font-medium">Video Search</span>
@@ -144,7 +144,7 @@ export default function Dashboard() {
             </Card>
           </Link>
           <Link href="/import?method=playlist" className="block">
-            <Card className="hover:bg-[#2a2a2a] transition-colors cursor-pointer border-dashed border-muted-foreground/50">
+            <Card className="hover:bg-accent transition-colors cursor-pointer border-dashed border-muted-foreground/50">
                 <CardContent className="pt-6 flex flex-col items-center gap-2">
                     <ListVideo className="h-8 w-8 text-muted-foreground" />
                     <span className="text-sm font-medium">Import YT Playlist</span>
@@ -158,7 +158,7 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {playlists.map((pl) => (
             <Link key={pl.id} href={`/playlists/${pl.id}`}>
-              <Card className="bg-[#1e1e1e] border-none hover:ring-1 hover:ring-primary/50 transition-all cursor-pointer group">
+              <Card className="bg-card border-none hover:ring-1 hover:ring-primary/50 transition-all cursor-pointer group">
                 <div className="aspect-video bg-muted relative rounded-t-lg overflow-hidden">
                   {pl.thumbnail ? (
                     <img src={pl.thumbnail} alt="" className="object-cover w-full h-full" />

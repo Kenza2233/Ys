@@ -49,6 +49,7 @@ model Playlist {
   isPublic    Boolean   @default(false)
   tags        String[]  // array of tag strings
   videos      Video[]
+  importJobs  ImportJob[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
@@ -80,6 +81,7 @@ model ImportJob {
   id          String        @id @default(cuid())
   userId      String
   user        User          @relation(fields: [userId], references: [id])
+  playlist    Playlist?     @relation(fields: [playlistId], references: [id], onDelete: SetNull)
   playlistId  String?
   method      String        // "manual_paste" | "xlsx_upload" | "search_select" | "playlist_import"
   status      String        // "pending" | "processing" | "completed" | "failed" | "partial"

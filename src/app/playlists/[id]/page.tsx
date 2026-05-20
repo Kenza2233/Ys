@@ -34,8 +34,20 @@ export default function PlaylistDetail({ params }: { params: Promise<{ id: strin
   };
 
   const deleteVideo = async (videoId: string) => {
-    // Implement delete
-    toast.info("Delete not implemented yet");
+    try {
+      const response = await fetch(`/api/playlists/${id}/videos/${videoId}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        toast.success("Video removed from playlist");
+        fetchPlaylist(); // Refresh the list
+      } else {
+        const data = await response.json();
+        toast.error(data.error || "Failed to remove video");
+      }
+    } catch (error) {
+      toast.error("An error occurred");
+    }
   };
 
   const handleExport = () => {
@@ -76,10 +88,10 @@ export default function PlaylistDetail({ params }: { params: Promise<{ id: strin
           </Button>
         </div>
 
-        <div className="border rounded-xl bg-[#1e1e1e] overflow-hidden border-none">
+        <div className="border rounded-xl bg-card overflow-hidden border-none">
           <Table>
             <TableHeader>
-              <TableRow className="border-white/5">
+              <TableRow className="border-border">
                 <TableHead className="w-12"></TableHead>
                 <TableHead>Video</TableHead>
                 <TableHead>Duration</TableHead>
@@ -90,7 +102,7 @@ export default function PlaylistDetail({ params }: { params: Promise<{ id: strin
               {playlist.videos?.map((v: any) => (
                 <TableRow
                   key={v.id}
-                  className={`border-white/5 cursor-pointer hover:bg-white/5 transition-colors ${activeVideoId === v.youtubeVideoId ? 'bg-primary/10' : ''}`}
+                  className={`border-border cursor-pointer hover:bg-accent transition-colors ${activeVideoId === v.youtubeVideoId ? 'bg-accent' : ''}`}
                   onClick={() => setActiveVideoId(v.youtubeVideoId)}
                 >
                   <TableCell className="text-muted-foreground">
@@ -119,11 +131,11 @@ export default function PlaylistDetail({ params }: { params: Promise<{ id: strin
       </div>
 
       <div className="space-y-6">
-        <Card className="bg-[#1e1e1e] border-none">
+        <Card className="bg-card border-none">
           <CardContent className="p-6 space-y-4">
             <h3 className="font-bold">Playlist Info</h3>
             <p className="text-sm text-muted-foreground">{playlist.description || "No description provided."}</p>
-            <div className="pt-4 border-t border-white/5 space-y-2">
+            <div className="pt-4 border-t border-border space-y-2">
                 <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Created</span>
                     <span>{new Date(playlist.createdAt).toLocaleDateString()}</span>
@@ -133,11 +145,11 @@ export default function PlaylistDetail({ params }: { params: Promise<{ id: strin
                     <span>{playlist.isPublic ? "Public" : "Private"}</span>
                 </div>
             </div>
-            <Button variant="outline" className="w-full" >
-                <Link href="/import">
-                    <Play className="h-4 w-4 mr-2" /> Add More Videos
-                </Link>
-            </Button>
+            <Link href="/import" className="w-full">
+              <Button variant="outline" className="w-full">
+                  <Play className="h-4 w-4 mr-2" /> Add More Videos
+              </Button>
+            </Link>
           </CardContent>
         </Card>
 
@@ -148,7 +160,7 @@ export default function PlaylistDetail({ params }: { params: Promise<{ id: strin
                 {playlist.videos?.map((v: any, i: number) => (
                     <div
                         key={v.id}
-                        className={`p-2 rounded flex gap-3 cursor-pointer transition-colors ${activeVideoId === v.youtubeVideoId ? 'bg-primary/20 ring-1 ring-primary/50' : 'bg-[#1e1e1e] hover:bg-[#2a2a2a]'}`}
+                        className={`p-2 rounded flex gap-3 cursor-pointer transition-colors ${activeVideoId === v.youtubeVideoId ? 'bg-accent/80 ring-1 ring-primary/50' : 'bg-card hover:bg-accent'}`}
                         onClick={() => setActiveVideoId(v.youtubeVideoId)}
                     >
                         <span className="text-xs text-muted-foreground self-center w-4">{i + 1}</span>

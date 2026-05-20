@@ -70,8 +70,8 @@ export default function LandingPage() {
 
 function FeatureCard({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) {
   return (
-    <div className="p-6 bg-[#1e1e1e] rounded-2xl space-y-4 text-left border border-white/5">
-      <div className="bg-[#2a2a2a] w-16 h-16 rounded-xl flex items-center justify-center">
+    <div className="p-6 bg-card rounded-2xl space-y-4 text-left border border-border">
+      <div className="bg-muted w-16 h-16 rounded-xl flex items-center justify-center">
         {icon}
       </div>
       <h3 className="text-xl font-bold">{title}</h3>

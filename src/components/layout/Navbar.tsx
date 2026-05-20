@@ -2,7 +2,7 @@
 
 import { useSession, signIn, signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
-import { LogOut, LayoutDashboard, ListPlus, Settings } from "lucide-react";
+import { LogOut, LayoutDashboard, ListPlus } from "lucide-react";
 import { YoutubeIcon as Youtube } from "@/components/icons/YoutubeIcon";
 import Link from "next/link";
 
